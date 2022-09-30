@@ -21,7 +21,7 @@
                     @endif
                     @if(!(Auth::user()->is_admin))
                         <x-nav-link :href="route('konsum')" :active="request()->routeIs('konsum')">
-                            {{ __('Konsum anzeigen') }}
+                            {{ __('Abstreichen') }}
                         </x-nav-link>
                     @endif
                     @if(Auth::user()->is_admin)

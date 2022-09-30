@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function (){
-    return view('welcome');
-})->middleware('auth');
+    return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
+})->middleware(['auth']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/konsum', function () {
