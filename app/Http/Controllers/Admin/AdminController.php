@@ -103,6 +103,20 @@ class AdminController extends Controller
         return redirect('admin/drinks');
     }
 
+    public function createDrink(Request $request){
+        $formField = $request->validate([
+            'name' => ['required', 'string'],
+            'barcode' => ['required', 'int'],
+            'price' => ['required']
+        ]);
+
+        if ($request->hasFile('picture')){
+            $formField['picture'] = $request->file('picture')->store('img', 'public');
+        }
+        Drink::create($formField);
+        return redirect('admin/drinks');
+    }
+
     public function updateUser(Request $request, User $user){
         $formField = $request->validate([
             'name' => ['required', 'string', 'max:255'],

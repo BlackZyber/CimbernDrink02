@@ -54,6 +54,10 @@ Route::get('/admin/drinks/{drink}/edit', function (\App\Models\Drink $drink) {
     return view('admin.adminDrinkEdit', ['drink' => $drink]);
 })->middleware(['admin'])->name('adminDrinkEdit');
 
+Route::get('/admin/drinks/create', function (\App\Models\Drink $drink) {
+    return view('admin.adminDrinkCreate', ['drink' => $drink]);
+})->middleware(['admin'])->name('adminDrinkEdit');
+
 
 
 Route::get('presssystem', function (){
@@ -74,6 +78,7 @@ Route::post('deleteUser', [\App\Http\Controllers\Admin\AdminController::class, '
 Route::post('changePassword', [\App\Http\Controllers\Admin\AdminController::class, 'changePassword']);
 Route::post('admin/export', [\App\Http\Controllers\Admin\AdminController::class, 'export']);
 Route::post('admin/invoice', [\App\Http\Controllers\Admin\AdminController::class, 'downloadExport']);
+Route::post('/admin/drinks/create', [\App\Http\Controllers\Admin\AdminController::class, 'createDrink']);
 
 
 

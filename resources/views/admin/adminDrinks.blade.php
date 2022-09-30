@@ -49,13 +49,10 @@
 
 
         <div class="max-w-7xl mt-6 mx-auto  p-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            <form method="post" action="">
-                @csrf
-                // TODO Getränk erstellen funktion
-                <input type="hidden" name="id" value="">
-                <input class="w-100 mt-1 px-4 py-2 font-semibold text-sm bg-slate-700 text-slate-700 bg-slate-700 text-white rounded-md shadow-sm ring-1 ring-slate-900/5 border-indigo-500 border-sky-500 border-2 border-solid"
-                       type="submit" value="Neues Getränk Erstellen">
-            </form>
+            <a href="/admin/drinks/create"
+               class="w-100 mt-1 px-4 py-2 font-semibold text-sm bg-slate-700 text-slate-700 bg-slate-700 text-white rounded-md shadow-sm ring-1 ring-slate-900/5 border-indigo-500 border-sky-500 border-2 border-solid">
+                Getränke erstellen
+            </a>
         </div>
     </div>
 
