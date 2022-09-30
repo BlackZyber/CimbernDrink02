@@ -55,7 +55,7 @@ class UserController extends Controller
 
         $user->drinks()->save($drink);
 
-        return redirect('presssystem/user');
+        return back();
     }
 
 

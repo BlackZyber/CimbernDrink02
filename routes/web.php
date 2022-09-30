@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/konsum', function () {
-    return view('konsum');
+    return view('konsum', ['drinks' => \App\Models\Drink::all()]);
 })->middleware(['auth'])->name('konsum');
 
 Route::get('/admin/register', function () {
