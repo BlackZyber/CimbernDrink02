@@ -16,16 +16,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-slate-800 text-cyan-400">
     <div id="wrapper" class="w-11/12 mx-auto justify-center">
         @error('barcode')
         <p>{{$message}}</p>
         @enderror
-        <div class="w-100 flex justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="w-100 flex justify-center items-center pt-6 sm:pt-0 bg-slate-800 text-cyan-400">
 
             <div class="w-100 mt-6 mx-auto justify-center  p-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                <table class="border-collapse w-100 w-full border border-slate-400 border-slate-500 bg-white bg-slate-800 text-sm shadow-sm">
-                    <thead class="bg-slate-50 bg-slate-700">
+                <table class="border-collapse w-100 w-full border border-slate-400 border-slate-500 bg-white text-sm shadow-sm">
+                    <thead class="bg-slate-50 bg-white">
                     <th class="w-1/2 border border-slate-300 border-slate-600 font-semibold p-4 text-slate-200 text-left align-baseline">
                         <p class="w-60 mt-1 float-start">Name</p>
                         <form class="opacity: 0" method="POST" action="/presssystem/user" enctype="multipart/form-data">
@@ -49,8 +49,8 @@
                     @endphp
                     @foreach($users as $user)
                         <tr>
-                            <th class="border border-slate-300 border-slate-700 p-4 text-slate-400">{{$user->name}}</th>
-                            <th class="border border-slate-300 border-slate-700 p-4 text-slate-400">{{($user->amount)}}
+                            <th class="border bg-slate-800 text-cyan-400 p-4 text-slate-400">{{$user->name}}</th>
+                            <th class="border bg-slate-800 text-cyan-400 p-4 text-slate-400">{{($user->amount)}}
                                 €
                             </th>
 

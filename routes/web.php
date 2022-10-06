@@ -39,7 +39,7 @@ Route::get('/admin/user/{user}/edit', function (\App\Models\User $user) {
 })->middleware(['admin'])->name('adminUserEdit');
 
 Route::get('/admin/log', function () {
-    return view('admin.adminLog', ['users' => \App\Models\User::with('drinks')->get()]);
+    return view('admin.adminLog', ['users' => \App\Models\User::all()->pivot->get()]);
 })->middleware(['admin'])->name('adminLog');
 
 Route::get('/admin/invoice', function () {
@@ -56,7 +56,7 @@ Route::get('/admin/drinks/{drink}/edit', function (\App\Models\Drink $drink) {
 
 Route::get('/admin/drinks/create', function (\App\Models\Drink $drink) {
     return view('admin.adminDrinkCreate', ['drink' => $drink]);
-})->middleware(['admin'])->name('adminDrinkEdit');
+})->middleware(['admin'])->name('adminDrinkCreate');
 
 
 
@@ -65,7 +65,7 @@ Route::get('presssystem', function (){
 });
 
 Route::get('presssystem/user', function (){
-    return view('input_user',['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
+    return view('input_user',['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->limit(10)->get()]);
 })->middleware(['auth']);
 
 Route::put('/admin/drinks/{drink}', [\App\Http\Controllers\Admin\AdminController::class, 'updateDrinks'])->middleware(['admin']);
@@ -78,7 +78,7 @@ Route::post('deleteUser', [\App\Http\Controllers\Admin\AdminController::class, '
 Route::post('changePassword', [\App\Http\Controllers\Admin\AdminController::class, 'changePassword']);
 Route::post('admin/export', [\App\Http\Controllers\Admin\AdminController::class, 'export']);
 Route::post('admin/invoice', [\App\Http\Controllers\Admin\AdminController::class, 'downloadExport']);
-Route::post('/admin/drinks/create', [\App\Http\Controllers\Admin\AdminController::class, 'createDrink']);
+Route::put('/admin/drinks/create', [\App\Http\Controllers\Admin\AdminController::class, 'createDrink']);
 
 
 
