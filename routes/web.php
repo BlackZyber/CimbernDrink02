@@ -15,49 +15,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (){
-    return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
-})->middleware(['auth']);
+Route::middleware(['auth'])->group(function (){
+    Route::get('/', function (){
+        return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
+    });
 
-Route::get('/dashboard', function () {
-    return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
-})->middleware(['auth'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard', ['drinks' => auth()->user()->drinks()->orderBy('drink_user.created_at', 'desc')->get()]);
+    });
 
-Route::get('/konsum', function () {
-    return view('konsum', ['drinks' => \App\Models\Drink::all()]);
-})->middleware(['auth'])->name('konsum');
+    Route::get('/konsum', function () {
+        return view('konsum', ['drinks' => \App\Models\Drink::all()]);
+    });
+});
 
-Route::get('/admin/register', function () {
-    return view('admin.adminRegister');
-})->middleware(['admin'])->name('adminRegister');
+Route::middleware(['admin'])->group( function (){
+    Route::get('/admin/register', function () {
+        return view('admin.adminRegister');
+    })->name('adminRegister');
 
-Route::get('/admin/user', function () {
-    return view('admin.adminUser', ['users' => \App\Models\User::all()]);
-})->middleware(['admin'])->name('adminUser');
+    Route::get('/admin/user', function () {
+        return view('admin.adminUser', ['users' => \App\Models\User::all()]);
+    }))->name('adminUser');
 
-Route::get('/admin/user/{user}/edit', function (\App\Models\User $user) {
-    return view('admin.adminUserEdit', ['user' => $user]);
-})->middleware(['admin'])->name('adminUserEdit');
+    Route::get('/admin/user/{user}/edit', function (\App\Models\User $user) {
+        return view('admin.adminUserEdit', ['user' => $user]);
+    })->name('adminUserEdit');
 
-Route::get('/admin/log', function () {
-    return view('admin.adminLog', ['users' => \App\Models\User::all()->pivot->get()]);
-})->middleware(['admin'])->name('adminLog');
+    Route::get('/admin/log', function () {
+        return view('admin.adminLog', ['users' => \App\Models\User::all()->pivot->get()]);
+    })->name('adminLog');
 
-Route::get('/admin/invoice', function () {
-    return view('admin.adminInvoice', ['invoices' => \App\Models\Invoice::all()]);
-})->middleware(['admin'])->name('adminInvoice');
+    Route::get('/admin/invoice', function () {
+        return view('admin.adminInvoice', ['invoices' => \App\Models\Invoice::all()]);
+    })->name('adminInvoice');
 
-Route::get('/admin/drinks', function () {
-    return view('admin.adminDrinks', ['drinks' => \App\Models\Drink::all()]);
-})->middleware(['admin'])->name('adminDrinks');
+    Route::get('/admin/drinks', function () {
+        return view('admin.adminDrinks', ['drinks' => \App\Models\Drink::all()]);
+    })->name('adminDrinks');
 
-Route::get('/admin/drinks/{drink}/edit', function (\App\Models\Drink $drink) {
-    return view('admin.adminDrinkEdit', ['drink' => $drink]);
-})->middleware(['admin'])->name('adminDrinkEdit');
+    Route::get('/admin/drinks/{drink}/edit', function (\App\Models\Drink $drink) {
+        return view('admin.adminDrinkEdit', ['drink' => $drink]);
+    })->name('adminDrinkEdit');
 
-Route::get('/admin/drinks/create', function (\App\Models\Drink $drink) {
-    return view('admin.adminDrinkCreate', ['drink' => $drink]);
-})->middleware(['admin'])->name('adminDrinkCreate');
+    Route::get('/admin/drinks/create', function (\App\Models\Drink $drink) {
+        return view('admin.adminDrinkCreate', ['drink' => $drink]);
+    })->name('adminDrinkCreate');
+});
+
+
 
 
 
