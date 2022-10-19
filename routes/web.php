@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,7 +70,7 @@ Route::get('presssystem/user', function (){
 })->middleware(['auth']);
 
 Route::put('/admin/drinks/{drink}', [\App\Http\Controllers\Admin\AdminController::class, 'updateDrinks'])->middleware(['admin']);
-Route::put('/admin/user/{drink}', [\App\Http\Controllers\Admin\AdminController::class, 'updateUser'])->middleware(['admin']);
+Route::put('/admin/user/{user}', [\App\Http\Controllers\Admin\AdminController::class, 'updateUser'])->middleware(['admin']);
 
 
 Route::post('presssystem/user', [\App\Http\Controllers\UserController::class, 'barcodeLogin']);
@@ -78,9 +79,9 @@ Route::post('deleteUser', [\App\Http\Controllers\Admin\AdminController::class, '
 Route::post('changePassword', [\App\Http\Controllers\Admin\AdminController::class, 'changePassword']);
 Route::post('admin/export', [\App\Http\Controllers\Admin\AdminController::class, 'export']);
 Route::post('admin/invoice', [\App\Http\Controllers\Admin\AdminController::class, 'downloadExport']);
-Route::put('/admin/drinks/create', [\App\Http\Controllers\Admin\AdminController::class, 'createDrink']);
-
-
+Route::post('admin/drinks/create', [\App\Http\Controllers\Admin\AdminController::class, 'createDrink']);
+Route::post('admin/register2', [RegisteredUserController::class, 'store']);
+Route::post('/admin/users/store', [\App\Http\Controllers\Admin\AdminController::class, 'store'])->name('adminStore');
 
 
 require __DIR__.'/auth.php';

@@ -35,7 +35,7 @@
             <div>
                 <x-input-label for="password" :value="__('Passwort')" />
 
-                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" value="" required/>
+                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" value=""/>
                 @error('password')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Drink;
 use App\Models\Invoice;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,6 +29,24 @@ class AdminController extends Controller
      */
     public function index(){
         return view('admin.index');
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'barcode' => rand(100000, 999999)
+        ]);
+        event(new Registered($user));
+
+        return redirect('/admin/user');
     }
 
     /**
@@ -117,20 +137,22 @@ class AdminController extends Controller
         return redirect('admin/drinks');
     }
 
-    public function updateUser(Request $request, User $user){
+    public function updateUser(Request $request, $user){
+        $UUser = User::find($user);
         $formField = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
         ]);
 
-        if ($request->has('password')){
+        if ($request->password != null){
+
             $request->validate([
-                'password' => ['required', Rules\Password::defaults()],
+                'password' => [Rules\Password::defaults()],
             ]);
             $formField['password'] = Hash::make($request->password);
         }
 
-        $user->update($formField);
+        $UUser->update($formField);
         return redirect('admin/user');
     }
 
