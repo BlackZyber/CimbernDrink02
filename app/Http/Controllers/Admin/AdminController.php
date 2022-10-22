@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use App\Mail\Bierrechnung;
 use App\Models\Drink;
 use App\Models\Invoice;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -170,6 +172,7 @@ class AdminController extends Controller
         $path = 'Bierrechnung/Bierrechnung_'.date("Ymd").'_'.uniqid().'.xlsx';
 
         Invoice::create(['download' => $path]);
+        $this->sendInvoice();
         $this->setAmountToZero();
 
         Excel::store($export, $path);
@@ -182,5 +185,15 @@ class AdminController extends Controller
             $user->amount = 0;
             $user->save();
         }
+    }
+
+    public function sendInvoice(){
+        $users = User::where('amount', '>', 0);
+
+        foreach ($users as $user){
+            dd($user);
+            Mail::to($user->email)->send(new Bierrechnung($user));
+        }
+
     }
 }
